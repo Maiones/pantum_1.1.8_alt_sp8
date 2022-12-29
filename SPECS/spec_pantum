@@ -4,41 +4,16 @@ Release: alt1.1
 BuildArch: x86_64
 
 Summary: Pantum 1.1.82 drivers
-License: see /usr/share/doc/pantum/copyright
+License: see %_docdir/pantum/copyright
 Group: Other
+
+Packager: Marat Faizov <twinkcy@yandex.ru>
 
 Source: %name-%version.tar.gz
 
-BuildPreReq: /lib64/ld-linux-x86-64.so.2
-BuildPreReq: libc.so.6(GLIBC_2.11)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.14)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.15)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.2.5)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.3)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.3.4)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.4)(64bit)
-BuildPreReq: libc.so.6(GLIBC_2.7)(64bit)
-BuildPreReq: libcups.so.2()(64bit) >= set:ni9kwFmpVJEVqu5COO56GIRR2K1FOCSyWNG8yISUdwtdoRZzPZyH46ye9
 BuildPreReq: libcupsimage.so.2()(64bit) >= set:hekQw3r7Fj0
-BuildPreReq: libdl.so.2(GLIBC_2.2.5)(64bit)
-BuildPreReq: libgcc_s.so.1(GCC_3.0)(64bit)
-BuildPreReq: libjpeg.so.8()(64bit) >= set:kfZudmJ8ug3LI2kX8Z2sav5ksPbY4d70I3hGUZfWC7
 BuildPreReq: libjpeg.so.8(LIBJPEG_8.0)(64bit)
-BuildPreReq: libm.so.6(GLIBC_2.2.5)(64bit)
-BuildPreReq: libpthread.so.0(GLIBC_2.2.5)(64bit)
-BuildPreReq: libstdc++.so.6(CXXABI_1.3)(64bit)
-BuildPreReq: libstdc++.so.6(CXXABI_1.3.1)(64bit)
-BuildPreReq: libstdc++.so.6(CXXABI_1.3.8)(64bit)
-BuildPreReq: libstdc++.so.6(CXXABI_1.3.9)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4.11)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4.15)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4.20)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4.21)(64bit)
-BuildPreReq: libstdc++.so.6(GLIBCXX_3.4.9)(64bit)
 BuildPreReq: libusb-1.0.so.0()(64bit) >= set:kfVTRgEFxm8ZAfcSjKBkieRFo83h76dpvR9c8WhvcVi1RKR0SPHXiUwQOe
-BuildPreReq: libz.so.1()(64bit) >= set:khdWPIUrJuazh01Xf1
-BuildPreReq: rtld(GNU_HASH)
 
 AutoReqProv: no
 
@@ -50,21 +25,21 @@ Nothing.
 
 %build
 %install
-mkdir -p %buildroot/usr/share/cups/model/%name/
-mkdir -p %buildroot/usr/share/doc/%name
+mkdir -p %buildroot%_datadir/cups/model/%name/
+mkdir -p %buildroot%_docdir/%name
 mkdir -p %buildroot/usr/local/lib/sane/
 mkdir -p %buildroot/usr/local/etc/sane.d/dll.d/
-mkdir -p %buildroot/usr/lib/cups/filter/
+mkdir -p %buildroot%_libexecdir/cups/filter/
 mkdir -p %buildroot/usr/local/lib/sane/
 mkdir -p %buildroot/usr/lib64/sane/
-mkdir -p %buildroot/usr/lib/sane/
+mkdir -p %buildroot%_libexecdir/sane/
 
 mkdir -p %buildroot/etc/sane.d/dll.d/
 mkdir -p %buildroot/etc/udev/rules.d/
 
 mkdir -p %buildroot/opt/pantum/bin/
 
-install -c -m0644 usr/share/cups/model/%name/*.ppd %buildroot/usr/share/cups/model/%name/
+install -c -m0644 usr/share/cups/model/%name/*.ppd %buildroot%_datadir/cups/model/%name/
 
 install -c -m0644 etc/udev/rules.d/60-pantum_mfp.rules %buildroot/etc/udev/rules.d/
 install -c -m0644 etc/sane.d/dll.d/* %buildroot/etc/sane.d/dll.d/
@@ -74,7 +49,7 @@ install -c -m0644 usr/local/etc/sane.d/dll.d/* %buildroot/usr/local/etc/sane.d/d
 install -c -m0644 usr/local/etc/sane.d/pantum_mfp.conf %buildroot/usr/local/etc/sane.d/
 install -c -m0644 usr/local/etc/sane.d/pantum6500.conf %buildroot/usr/local/etc/sane.d/
 
-install -c -m0755 usr/lib/cups/filter/* %buildroot/usr/lib/cups/filter/
+install -c -m0755 usr/lib/cups/filter/* %buildroot%_libexecdir/cups/filter/
 
 install -c -m0777 usr/lib64/sane/libsane-pantum6500.so %buildroot/usr/lib64/sane/
 install -c -m0777 usr/lib64/sane/libsane-pantum6500.so.1 %buildroot/usr/lib64/sane/
@@ -83,14 +58,14 @@ install -c -m0777 usr/lib64/sane/libsane-pantum_mfp.so %buildroot/usr/lib64/sane
 install -c -m0777 usr/lib64/sane/libsane-pantum_mfp.so.1 %buildroot/usr/lib64/sane/
 install -c -m0644 usr/lib64/sane/libsane-pantum_mfp.so.1.0.24 %buildroot/usr/lib64/sane/
 
-install -c -m0777 usr/lib/sane/libsane-pantum6500.so %buildroot/usr/lib/sane/
-install -c -m0777 usr/lib/sane/libsane-pantum6500.so.1 %buildroot/usr/lib/sane/
-install -c -m0644 usr/lib/sane/libsane-pantum6500.so.1.0.24 %buildroot/usr/lib/sane/
-install -c -m0777 usr/lib/sane/libsane-pantum_mfp.so %buildroot/usr/lib/sane/
-install -c -m0777 usr/lib/sane/libsane-pantum_mfp.so.1 %buildroot/usr/lib/sane/
-install -c -m0644 usr/lib/sane/libsane-pantum_mfp.so.1.0.24 %buildroot/usr/lib/sane/
+install -c -m0777 usr/lib/sane/libsane-pantum6500.so %buildroot%_libexecdir/sane/
+install -c -m0777 usr/lib/sane/libsane-pantum6500.so.1 %buildroot%_libexecdir/sane/
+install -c -m0644 usr/lib/sane/libsane-pantum6500.so.1.0.24 %buildroot%_libexecdir/sane/
+install -c -m0777 usr/lib/sane/libsane-pantum_mfp.so %buildroot%_libexecdir/sane/
+install -c -m0777 usr/lib/sane/libsane-pantum_mfp.so.1 %buildroot%_libexecdir/sane/
+install -c -m0644 usr/lib/sane/libsane-pantum_mfp.so.1.0.24 %buildroot%_libexecdir/sane/
 
-install -c -m0644 usr/share/doc/%name/* %buildroot/usr/share/doc/%name
+install -c -m0644 usr/share/doc/%name/* %buildroot%_docdir/%name
 
 install -c -m0755 opt/pantum/bin/ptqpdf %buildroot/opt/pantum/bin/
 install -c -m0644 usr/local/lib/libqpdf.so.21.0.2 %buildroot/usr/local/lib/
@@ -98,11 +73,14 @@ install -c -m0644 usr/local/lib/libqpdf.so.21.0.2 %buildroot/usr/local/lib/
 %set_verify_elf_method no
 
 %files
-/etc/*
+%_sysconfdir/*
 /opt/*
 /usr/*
 
 %changelog
+* Wed Dec 28 2022 Marat Faizov <twinkcy@yandex.ru> 1.1.82-alt1.1
+- initial build for ALT Linux Sisyphus
+
 * Mon Dec 22 2022 Marat Faizov <faizov@cg.ru> 1-marat1
 - Add requeries + arch.
 
